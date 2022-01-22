@@ -5,7 +5,7 @@ import time
 
 """
 The purpose of this script is to quickly convert a large number of image
-files and convert them into .out files. I've done my best to make it as
+files and convert them into .ico files. I've done my best to make it as
 adaptable as possible to accomodate furture expansions.
 
 As you can see, it's currently being used to convert images into .ico icons
