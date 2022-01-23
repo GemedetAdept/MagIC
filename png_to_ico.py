@@ -2,6 +2,8 @@ import os
 from PIL import Image
 import shutil
 import time
+import imghdr
+
 
 """
 The purpose of this script is to quickly convert a large number of image
@@ -12,94 +14,88 @@ As you can see, it's currently being used to convert images into .ico icons
 """
 
 # Gets the directory of the file the script is in
-universal_directory = os.getcwd()
-print(universal_directory)
+univ_dir = os.getcwd()
+# print(univ_dir)
 
 
-def folder_nav(repository):
+def folder_nav(location):
 
 	"""Combines project directory and any folder within it into a single path"""
 
-	universal_folder = os.path.join(universal_directory, repository)
-	print(universal_folder)
+	univ_folder = os.path.join(univ_dir, location)
+	# print(univ_folder)
 
-	return universal_folder
+	return univ_folder
 
 
-def file_nav(repository, file):
+def file_nav(location, file):
 
 	"""Combines any folder with a file inside it into a single path"""
 
-	universal_file = os.path.join(repository, file)
-	print(universal_file)
+	univ_file = os.path.join(location, file)
+	# print(univ_file)
 
-	return universal_file
+	return univ_file
 
 
-def build(repository, input_file, ext):
+def build(location, in_file, ext):
 
-	"""Builds filename from components and combines it with the folder it's in"""
+	"""Construct filenames from components"""
 
-	# Adds a timestamp to outgoing files to avoid conflicts
-	if (repository != input_repository):
-		filename = f"{file_name}_{timestamp}"
-		print(filename)
+	if (location != in_location):
+		file_name = f"{file_name}_{ts}"
 
-	build_parts = (f"{filename}.{ext}")
-	print(build_parts)
+	build_parts = (f"{file_name}.{ext}")
 
 	# Get it? Like compile but it's comp *file*. I'm hilarious.
-	# 11/28/21: I've left this variable abbreviation for the sake of the joke
-	comp_file = os.path.join(repository, build_parts)
-	print(comp_file)
+	comp_file = os.path.join(location, build_parts)
 
 	return comp_file
 
 
-# Variables with the names of files in the directory
-input_repository = "input"
-output_repository = "output"
-processed_repository = "processed"
+# Define the name of each folder used
+in_location = "input"
+out_location = "output"
+proc_location = "processed"
 
-# File extension and, in this case, a resolution variable
-output_extension = "ico"
-output_resolution = [(100, 100)]
+out_extension = "ico"
+out_resolution = []
 
-input_extensions = ["png", "jpg", "jpeg"]
+in_extensions = ["png", "jpg", "jpeg", "gif", "tiff"]
 
-timestamp = str(time.time())[5:10]
+# Generate time stamp to avoid name conflicts
+ts = str(time.time())[5:10]
 
-# The input/output folders used to load from/save to via the folder_nav def
-input_path = folder_nav(input_repository)
-output_path = folder_nav(output_repository)
-processed_path = folder_nav(processed_repository)
+# Create full file path for each folder
+in_path = folder_nav(in_location)
+out_path = folder_nav(out_location)
+proc_path = folder_nav(proc_location)
 
-# Creates a list of all files in the input folder
-inputs = os.listdir(input_path)
+# List all files in the input folder
+inputs = os.listdir(in_path)
+print(inputs)
 
-# For loop that runs through the files in the directory
-for input_ in inputs:
+for in_ in inputs:
 
-	# Checks if any of the listed extensions exist within the file names
-	if any(x in input_ for x in input_extensions):
+	# Check if the file has a valid image extension
+	if any(x in in_ for x in in_extensions):
 
-		# Splits the input filename and retrieves the name
-		parts = input_.split(".")
+		parts = in_.split(".")
 		file_name = str(parts[0])
-		print(file_name)
 
-		# Builds the path of the output folder via the build def
-		save_path = build(output_repository, file_name, output_extension)
-		print(save_path)
+		# Build output path for shutl
+		save_path = build(out_location, file_name, out_extension)
 
-		# Gets the path of the current file in the loop and loads it into memory
-		source_path = file_nav(input_repository, input_)
+		# Load source image and convert it
+		source_path = file_nav(in_location, in_)
 		print(source_path)
 		source = Image.open(source_path, "r")
-		print(source)
 
-		# Converts the loaded file to the output form and saves it to file
-		source.save(save_path, format=output_extension, sizes=output_resolution)
+		# Find source image dimensions
+		res = source.size
+		out_resolution.append(res)
 
-		# Moves the inital files into another file
-		input_ = shutil.move(source_path, processed_path)
+		source.save(save_path, format=out_extension, sizes=out_resolution)
+
+		# Move source file to archive
+		# in_ = shutil.move(source_path, proc_path)
