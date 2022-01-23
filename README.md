@@ -1,5 +1,5 @@
-# Image to .ico Converter (MagIC)
-MagIC is a simple tool to convert any image file into a .ico file. Its primary purpose is to provide file icons, to be used for custom shortcuts.
+# Image to ICO Converter (MagIC)
+MagIC (I**mag**e to **I**CO **C**onverter) is a simple tool to convert any image file into a .ico file. Its primary purpose is to provide file icons, to be used for custom shortcuts.
 
 ## Getting Started
 
