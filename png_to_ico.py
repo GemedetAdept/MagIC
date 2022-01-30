@@ -61,7 +61,7 @@ proc_location = "processed"
 out_extension = "ico"
 out_resolution = []
 
-in_extensions = ["png", "jpg", "jpeg", "gif", "tiff"]
+in_extensions = ["png", "jpg", "jpeg", "gif", "tiff", "svg"]
 
 # Generate time stamp to avoid name conflicts
 ts = str(time.time())[5:10]
