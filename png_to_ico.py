@@ -38,12 +38,12 @@ def file_nav(location, file):
 	return univ_file
 
 
-def build(location, in_file, ext):
+def build(location, input_file, ext):
 
 	"""Construct filenames from components"""
 
-	if (location != in_location):
-		file_name = f"{file_name}_{ts}"
+	if (location != input_location):
+		file_name = f"{input_file}_{ts}"
 
 	build_parts = (f"{file_name}.{ext}")
 
@@ -54,40 +54,41 @@ def build(location, in_file, ext):
 
 
 # Define the name of each folder used
-in_location = "input"
+input_location = "input"
 out_location = "output"
 proc_location = "processed"
 
 out_extension = "ico"
 out_resolution = []
 
-in_extensions = ["png", "jpg", "jpeg", "gif", "tiff", "svg"]
+input_extensions = ["png", "jpg", "jpeg", "gif", "tiff", "svg"]
 
 # Generate time stamp to avoid name conflicts
 ts = str(time.time())[5:10]
 
 # Create full file path for each folder
-in_path = folder_nav(in_location)
+input_path = folder_nav(input_location)
 out_path = folder_nav(out_location)
 proc_path = folder_nav(proc_location)
 
 # List all files in the input folder
-inputs = os.listdir(in_path)
+inputs = os.listdir(input_path)
 print(inputs)
 
-for in_ in inputs:
+for input_ in inputs:
 
 	# Check if the file has a valid image extension
-	if any(x in in_ for x in in_extensions):
+	if any(x in input_ for x in input_extensions):
 
-		parts = in_.split(".")
+		parts = input_.split(".")
 		file_name = str(parts[0])
+		print(file_name)
 
 		# Build output path for shutl
 		save_path = build(out_location, file_name, out_extension)
 
 		# Load source image and convert it
-		source_path = file_nav(in_location, in_)
+		source_path = file_nav(input_location, input_)
 		print(source_path)
 		source = Image.open(source_path, "r")
 
@@ -98,4 +99,4 @@ for in_ in inputs:
 		source.save(save_path, format=out_extension, sizes=out_resolution)
 
 		# Move source file to archive
-		# in_ = shutil.move(source_path, proc_path)
+		input_ = shutil.move(source_path, proc_path)

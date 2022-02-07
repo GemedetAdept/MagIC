@@ -1,0 +1,10 @@
+# Input image file extensions #
+.png
+.jpg
+.jpeg
+.gif
+.tiff
+.svg
+
+# Output icon extension #
+.ico
