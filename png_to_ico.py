@@ -48,6 +48,8 @@ def build(location, input_file, ext):
 	build_parts = (f"{file_name}.{ext}")
 
 	# Get it? Like compile but it's comp *file*. I'm hilarious.
+	# Update from 2023: I continue to be hilarious. I mean, look at this! It's a classic!
+	# (Also: *Wow* I over-commented back then)
 	comp_file = os.path.join(location, build_parts)
 
 	return comp_file
